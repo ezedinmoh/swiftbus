@@ -4,6 +4,19 @@ A full-stack web application for booking bus tickets across Ethiopia.
 
 ![SwiftBus](swiftbus.jpg)
 
+## 📚 Documentation
+
+For detailed documentation, see the `docs/` folder:
+
+| Document | Description |
+|----------|-------------|
+| [PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Complete system architecture and how everything works together |
+| [FRONTEND_GUIDE.md](docs/FRONTEND_GUIDE.md) | Detailed explanation of all HTML/CSS/JavaScript files |
+| [BACKEND_GUIDE.md](docs/BACKEND_GUIDE.md) | Detailed explanation of all PHP API files |
+| [DATABASE_GUIDE.md](docs/DATABASE_GUIDE.md) | Complete database schema and SQL reference |
+| [PRESENTATION_GUIDE.md](docs/PRESENTATION_GUIDE.md) | How to present this project |
+| [QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md) | Cheat sheet for quick reference |
+
 ## Features
 
 - **User Features:**
