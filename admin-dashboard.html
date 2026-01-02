@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SwiftBus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #ff6d00;
+            --dark: #222;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            background: linear-gradient(135deg, var(--primary), #0d47a1);
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .admin-details h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .admin-role {
+            font-size: 12px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-section {
+            margin-bottom: 25px;
+        }
+
+        .menu-section h4 {
+            padding: 0 20px 10px;
+            color: var(--gray);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-items {
+            list-style: none;
+        }
+
+        .menu-items li {
+            margin: 5px 0;
+        }
+
+        .menu-items a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-items a:hover {
+            background: #f8f9fa;
+            border-left-color: var(--primary);
+            padding-left: 25px;
+        }
+
+        .menu-items a.active {
+            background: #e8f0fe;
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .menu-items a i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .menu-items .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+            display: none; /* Hide badge by default */
+        }
+
+        .menu-items .badge.show {
+            display: inline-block; /* Only show when needed */
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        .stat-card.primary::before { background: var(--primary); }
+        .stat-card.success::before { background: var(--success); }
+        .stat-card.warning::before { background: var(--warning); }
+        .stat-card.danger::before { background: var(--danger); }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        /* Additional stat card colors */
+        .stat-card.info::before { background: #17a2b8; }
+        .stat-card.secondary::before { background: #6c757d; }
+        .stat-card.purple::before { background: #6f42c1; }
+
+        .stat-card.info .stat-icon { background: #17a2b8; }
+        .stat-card.secondary .stat-icon { background: #6c757d; }
+        .stat-card.purple .stat-icon { background: #6f42c1; }
+
+        .stat-breakdown {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        .stat-breakdown span {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .stat-title {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-change.positive { color: var(--success); }
+        .stat-change.negative { color: var(--danger); }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .action-btn:hover {
+            background: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.1);
+        }
+
+        .action-btn i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .activity-content h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .activity-content p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Notifications/Alerts Section */
+        .notifications-alerts {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+        }
+
+        .alert-item.critical {
+            background: #fff5f5;
+            border-left-color: var(--danger);
+        }
+
+        .alert-item.warning {
+            background: #fffbf0;
+            border-left-color: var(--warning);
+        }
+
+        .alert-item.info {
+            background: #f0f8ff;
+            border-left-color: var(--primary);
+        }
+
+        .alert-item.success {
+            background: #f0fff4;
+            border-left-color: var(--success);
+        }
+
+        .alert-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .alert-item.critical .alert-icon { background: var(--danger); }
+        .alert-item.warning .alert-icon { background: var(--warning); }
+        .alert-item.info .alert-icon { background: var(--primary); }
+        .alert-item.success .alert-icon { background: var(--success); }
+
+        .alert-content h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .alert-content p {
+            font-size: 12px;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        .alert-time {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .header-actions {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="admin-info">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <div class="admin-details">
+                    <h3 id="adminName">Admin User</h3>
+                    <span class="admin-role">Administrator</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-section">
+                <h4>Dashboard</h4>
+                <ul class="menu-items">
+                    <li><a href="admin-dashboard.html" class="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h4>Management</h4>
+                <ul class="menu-items">
+              
+                    <li><a href="admin-buses-list.html">
+                        <i class="fas fa-bus"></i>
+                        Buses
+                        <span class="badge" id="busCount"></span>
+                    </a></li>
+                    <li><a href="admin-routes-list.html">
+                        <i class="fas fa-route"></i>
+                        Routes
+                    </a></li>
+                    <li><a href="admin-schedules-list.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        Schedules
+                    </a></li>
+                    <li><a href="admin-bookings-all.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        Bookings
+                        <span class="badge" id="bookingCount"></span>
+                    </a></li>
+                    <li><a href="admin-users-list.html">
+                        <i class="fas fa-users"></i>
+                        Users
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h4>Account</h4>
+                <ul class="menu-items">
+                    <li><a href="admin-profile.html">
+                        <i class="fas fa-user-circle"></i>
+                        Profile
+                    </a></li>
+                    <li><a href="#" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="content-header">
+            <div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="page-title">
+                <h1>Admin Dashboard</h1>
+                <p>Welcome back! Here's what's happening with your bus service today.</p>
+            </div>
+            
+            <div class="header-actions">
+                <div class="user-menu">
+                    <button class="user-btn">
+                        <i class="fas fa-user"></i>
+                        <span id="userName">Admin</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <!-- Total Bookings Card -->
+            <div class="stat-card primary">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Total Bookings</div>
+                        <div class="stat-value" id="totalBookings">0</div>
+                        <div class="stat-breakdown">
+                            <small>Today: <span id="todayBookings">0</span> | Week: <span id="weekBookings">0</span> | Month: <span id="monthBookings">0</span> | Year: <span id="yearBookings">0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Revenue Summary Card -->
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Revenue Summary 💰</div>
+                        <div class="stat-value" id="totalRevenue">ETB 0</div>
+                        <div class="stat-breakdown">
+                            <small>Today: <span id="todayRevenue">ETB 0</span> | Month: <span id="monthRevenue">ETB 0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Buses Card -->
+            <div class="stat-card warning">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Total Active Buses 🚌</div>
+                        <div class="stat-value" id="activeBuses">0</div>
+                        <div class="stat-breakdown">
+                            <small>Active: <span id="activeBusCount">0</span> | Maintenance: <span id="maintenanceBuses">0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-bus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Total Routes Card -->
+            <div class="stat-card info">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Total Routes 🛣️</div>
+                        <div class="stat-value" id="totalRoutes">0</div>
+                        <div class="stat-breakdown">
+                            <small>Active: <span id="activeRoutes">0</span> | Popular: <span id="popularRoutes">0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Total Users Card -->
+            <div class="stat-card secondary">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Total Users 👥</div>
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-breakdown">
+                            <small>Active: <span id="activeUsers">0</span> | New Today: <span id="newUsersToday">0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Booking Status Card -->
+            <div class="stat-card info">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Booking Status 📊</div>
+                        <div class="stat-value" id="totalBookingsSecond">0</div>
+                        <div class="stat-breakdown">
+                            <small>Confirmed: <span id="confirmedBookings">0</span> | Pending: <span id="pendingBookings">0</span> | Cancelled: <span id="cancelledBookings">0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Revenue Breakdown Card -->
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Revenue Breakdown 💰</div>
+                        <div class="stat-value" id="yearRevenue">ETB 0</div>
+                        <div class="stat-breakdown">
+                            <small>Year Total | Today: <span id="todayRevenue2">ETB 0</span> | Month: <span id="monthRevenue2">ETB 0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upcoming Trips Card -->
+            <div class="stat-card purple">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Upcoming Trips ⏰</div>
+                        <div class="stat-value" id="upcomingTrips">0</div>
+                        <div class="stat-breakdown">
+                            <small>Today: <span id="todayTrips">0</span> | This Week: <span id="weekTrips">0</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications & Alerts -->
+        <div class="notifications-alerts">
+            <h2 class="section-title">
+                <i class="fas fa-bell"></i>
+                Notifications & Alerts 🔔
+            </h2>
+            <div id="alertsContainer">
+                <!-- Alerts will be loaded here -->
+                <div class="alert-item info">
+                    <div class="alert-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <h4>System Status</h4>
+                        <p>All systems operational. Loading real-time alerts...</p>
+                    </div>
+                    <div class="alert-time">Just now</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2 class="section-title">
+                <i class="fas fa-bolt"></i>
+                Quick Actions
+            </h2>
+            <div class="actions-grid">
+                <a href="admin-buses-list.html" class="action-btn" onclick="setTimeout(() => document.getElementById('addBusBtn')?.click(), 500);">
+                    <i class="fas fa-bus-alt"></i>
+                    <h4>Add New Bus</h4>
+                    <p>Add a new bus to fleet</p>
+                </a>
+                
+                <a href="admin-routes-list.html" class="action-btn" onclick="setTimeout(() => document.getElementById('addRouteBtn')?.click(), 500);">
+                    <i class="fas fa-road"></i>
+                    <h4>Add New Route</h4>
+                    <p>Create new bus route</p>
+                </a>
+                
+                <a href="admin-bookings-all.html" class="action-btn">
+                    <i class="fas fa-eye"></i>
+                    <h4>View All Bookings</h4>
+                    <p>Manage customer bookings</p>
+                </a>
+                
+                <a href="admin-schedules-list.html" class="action-btn">
+                    <i class="fas fa-clock"></i>
+                    <h4>Manage Schedules</h4>
+                    <p>Create and edit timetables</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i>
+                Recent Activity
+            </h2>
+            <ul class="activity-list" id="activityList">
+                <!-- Activities will be loaded here -->
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Loading...</h4>
+                        <p>Fetching recent system activities...</p>
+                    </div>
+                    <div class="activity-time">Now</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in and is admin
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                console.log('🚀 Initializing admin dashboard...');
+                
+                // Wait for API to be available
+                let attempts = 0;
+                while (typeof swiftBusAPI === 'undefined' && attempts < 10) {
+                    console.log(`⏳ Waiting for swiftBusAPI... (attempt ${attempts + 1})`);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    attempts++;
+                }
+                
+                if (typeof swiftBusAPI === 'undefined') {
+                    console.error('❌ swiftBusAPI not available after waiting');
+                    showAdminAlert('System error: API not loaded. Please refresh the page.', 'error');
+                    return;
+                }
+                
+                console.log('🔐 Starting admin dashboard authentication...');
+                
+                // Use unified API-based authentication
+                const response = await swiftBusAPI.checkSession();
+                console.log('📡 Auth response:', response);
+                
+                if (!response.success || !response.data) {
+                    console.log('❌ User not authenticated, redirecting to login');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                const userData = response.data;
+                console.log('✅ User authenticated:', userData);
+                
+                // Check if user has admin role
+                if (userData.role !== 'admin') {
+                    console.log('❌ Access denied - User role:', userData.role);
+                    showAdminAlert(`Access denied. Admin privileges required.<br><br>Your role: <strong>${userData.role}</strong>`, 'error', 'Access Denied');
+                    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                    return;
+                }
+                
+                // User is authenticated and is admin - proceed
+                console.log('🎉 Admin access granted for:', userData.name || userData.full_name);
+                
+                // Update UI with user data
+                const adminNameElement = document.getElementById('adminName');
+                const userNameElement = document.getElementById('userName');
+                
+                if (adminNameElement) {
+                    adminNameElement.textContent = userData.name || userData.full_name;
+                }
+                if (userNameElement) {
+                    userNameElement.textContent = (userData.name || userData.full_name).split(' ')[0];
+                }
+                
+                // Load profile image if available
+                if (userData.profileImage || userData.profile_image) {
+                    updateSidebarAvatar(userData.profileImage || userData.profile_image);
+                }
+                
+                // Check for cached profile data in localStorage (for cross-page sync)
+                loadCachedProfileData();
+                
+                // Setup event listeners first
+                setupEventListeners();
+                
+                // Setup profile sync listener
+                setupProfileSyncListener();
+                
+                // Load real dashboard data from backend
+                await loadRealDashboardData();
+                
+            } catch (error) {
+                console.error('💥 Authentication check failed:', error);
+                console.error('Error details:', error);
+                showAdminAlert(`Authentication failed: ${error.message}<br><br>Please try refreshing the page or logging in again.`, 'error', 'Authentication Error');
+                setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+            }
+        });
+
+        async function loadRealDashboardData() {
+            try {
+                showLoadingState();
+                console.log('📊 Loading dashboard statistics from database...');
+                
+                // Enhanced error handling with detailed logging
+                console.log('🔐 Checking authentication first...');
+                const authCheck = await swiftBusAPI.checkSession();
+                console.log('🔐 Auth check result:', authCheck);
+                
+                if (!authCheck.success) {
+                    console.error('❌ Authentication failed:', authCheck.message);
+                    showErrorMessage('Authentication failed: ' + authCheck.message);
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                    return;
+                }
+                
+                if (authCheck.data.role !== 'admin') {
+                    console.error('❌ Admin access required. User role:', authCheck.data.role);
+                    showErrorMessage('Admin access required. Your role: ' + authCheck.data.role);
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                    return;
+                }
+                
+                console.log('✅ Authentication passed, loading dashboard data...');
+                
+                // ============================================
+                // USE THE SAME API AS USER-DASHBOARD
+                // swiftBusAPI.getDashboardStats('admin') calls dashboard.php?action=get_admin_stats
+                // ============================================
+                console.log('📈 Requesting admin stats from dashboard.php...');
+                const statsResponse = await swiftBusAPI.getDashboardStats('admin');
+                console.log('📈 Stats response:', statsResponse);
+                
+                if (statsResponse.success && statsResponse.data) {
+                    console.log('✅ Stats data valid, displaying...');
+                    displayDashboardStats(statsResponse.data);
+                } else {
+                    console.error('❌ Failed to load stats:', statsResponse);
+                    const errorMsg = statsResponse.message || 'Unknown error occurred';
+                    console.error('Error details:', errorMsg);
+                    
+                    // Show detailed error message - NO FALLBACK TO SAMPLE DATA
+                    showErrorMessage(`Failed to load dashboard statistics: ${errorMsg}`);
+                    
+                    // Display zeros instead of sample data
+                    console.log('📊 Displaying empty dashboard data...');
+                    displayEmptyDashboardData();
+                }
+                
+                // ============================================
+                // LOAD SYSTEM ALERTS using swiftBusAPI.getSystemAlerts()
+                // ============================================
+                try {
+                    console.log('🔔 Requesting system alerts from dashboard.php...');
+                    const alertsResponse = await swiftBusAPI.getSystemAlerts();
+                    console.log('🔔 Alerts response:', alertsResponse);
+                    
+                    if (alertsResponse.success && alertsResponse.data) {
+                        displaySystemAlerts(alertsResponse.data);
+                    } else {
+                        console.log('⚠️ No alerts or failed to load alerts, using default');
+                        displayDefaultAlerts();
+                    }
+                } catch (alertError) {
+                    console.error('❌ Alerts loading failed:', alertError);
+                    displayDefaultAlerts();
+                }
+                
+                // ============================================
+                // LOAD RECENT ACTIVITIES using swiftBusAPI.getRecentActivities()
+                // ============================================
+                try {
+                    console.log('📋 Requesting recent activities from dashboard.php...');
+                    const activitiesResponse = await swiftBusAPI.getRecentActivities();
+                    console.log('📋 Activities response:', activitiesResponse);
+                    
+                    if (activitiesResponse.success && activitiesResponse.data) {
+                        displayRecentActivities(activitiesResponse.data);
+                    } else {
+                        console.log('⚠️ No activities or failed to load, using default');
+                        displayDefaultActivities();
+                    }
+                } catch (activityError) {
+                    console.error('❌ Activities loading failed:', activityError);
+                    displayDefaultActivities();
+                }
+                
+                hideLoadingState();
+                console.log('✅ Dashboard data loading completed');
+                
+            } catch (error) {
+                console.error('💥 Critical error in loadRealDashboardData:', error);
+                console.error('Error stack:', error.stack);
+                hideLoadingState();
+                
+                // Show detailed error information
+                const errorDetails = `
+                    Error: ${error.message}
+                    Type: ${error.name}
+                    Location: ${window.location.href}
+                    API URL: ${swiftBusAPI ? swiftBusAPI.apiURL : 'API not initialized'}
+                `;
+                
+                showErrorMessage('Critical error loading dashboard data. Check console for details.');
+                console.error('Detailed error info:', errorDetails);
+                
+                // Display empty data instead of sample data
+                console.log('📊 Displaying empty dashboard data due to critical error...');
+                displayEmptyDashboardData();
+                displayDefaultAlerts();
+                displayDefaultActivities();
+            }
+        }
+
+        function displayEmptyDashboardData() {
+            console.log('📊 Displaying empty dashboard data (no sample data)...');
+            
+            // Display zeros for all statistics
+            const emptyStats = {
+                bookings: {
+                    today: { count: 0, revenue: 0 },
+                    week: { count: 0, revenue: 0 },
+                    month: { count: 0, revenue: 0 },
+                    year: { count: 0, revenue: 0 }
+                },
+                buses: {
+                    total: 0,
+                    active: 0,
+                    maintenance: 0,
+                    inactive: 0
+                },
+                routes: {
+                    total: 0,
+                    active: 0,
+                    popular: []
+                },
+                users: {
+                    total: 0,
+                    active: 0,
+                    new_today: 0
+                },
+                upcoming_trips: {
+                    count: 0,
+                    today: 0,
+                    next_7_days: 0
+                }
+            };
+            
+            displayDashboardStats(emptyStats);
+            console.log('✅ Empty dashboard data displayed');
+        }
+
+        function displaySampleDashboardData() {
+            // Redirect to empty data display - no more sample data
+            displayEmptyDashboardData();
+        }
+        
+        function displayDefaultAlerts() {
+            console.log('🔔 Displaying default system alerts...');
+            const defaultAlerts = [
+                {
+                    id: 'system_operational',
+                    level: 'info',
+                    title: 'System Status',
+                    message: 'Unable to load real-time alerts. Please check your connection.',
+                    created_at: new Date().toISOString()
+                }
+            ];
+            
+            displaySystemAlerts(defaultAlerts);
+        }
+        
+        function displayDefaultActivities() {
+            console.log('📋 Displaying default recent activities...');
+            const defaultActivities = [
+                {
+                    id: 'no_data',
+                    type: 'info',
+                    title: 'No Recent Activity',
+                    description: 'Unable to load recent activities. Please check your connection.',
+                    status: 'info',
+                    timestamp: new Date().toISOString(),
+                    icon: 'fas fa-info-circle'
+                }
+            ];
+            
+            displayRecentActivities(defaultActivities);
+        }
+
+        function displayDashboardStats(stats) {
+            console.log('📊 Displaying dashboard stats:', stats);
+            
+            // ============================================
+            // BOOKING STATISTICS (from bookings table)
+            // ============================================
+            if (stats.bookings) {
+                // Total bookings = all bookings in database
+                const totalBookings = stats.bookings.total || 0;
+                document.getElementById('totalBookings').textContent = totalBookings;
+                
+                // Breakdown by time period
+                const todayCount = stats.bookings.today?.count || 0;
+                const weekCount = stats.bookings.week?.count || 0;
+                const monthCount = stats.bookings.month?.count || 0;
+                const yearCount = stats.bookings.year?.count || 0;
+                
+                document.getElementById('todayBookings').textContent = todayCount;
+                document.getElementById('weekBookings').textContent = weekCount;
+                document.getElementById('monthBookings').textContent = monthCount;
+                document.getElementById('yearBookings').textContent = yearCount;
+                
+                // Booking status breakdown
+                const confirmedEl = document.getElementById('confirmedBookings');
+                const pendingEl = document.getElementById('pendingBookings');
+                const cancelledEl = document.getElementById('cancelledBookings');
+                const totalBookingsSecondEl = document.getElementById('totalBookingsSecond');
+                
+                if (confirmedEl) confirmedEl.textContent = stats.bookings.confirmed || 0;
+                if (pendingEl) pendingEl.textContent = stats.bookings.pending || 0;
+                if (cancelledEl) cancelledEl.textContent = stats.bookings.cancelled || 0;
+                if (totalBookingsSecondEl) totalBookingsSecondEl.textContent = totalBookings;
+            }
+            
+            // ============================================
+            // REVENUE STATISTICS (from payments table - completed payments)
+            // ============================================
+            if (stats.revenue) {
+                // Total revenue from completed payments
+                const totalRevenue = stats.revenue.total || 0;
+                const todayRevenue = stats.revenue.today || 0;
+                const weekRevenue = stats.revenue.week || 0;
+                const monthRevenue = stats.revenue.month || 0;
+                const yearRevenue = stats.revenue.year || 0;
+                
+                document.getElementById('totalRevenue').textContent = `ETB ${totalRevenue.toLocaleString()}`;
+                document.getElementById('todayRevenue').textContent = `ETB ${todayRevenue.toLocaleString()}`;
+                document.getElementById('monthRevenue').textContent = `ETB ${monthRevenue.toLocaleString()}`;
+                
+                // Additional revenue elements
+                const yearRevenueEl = document.getElementById('yearRevenue');
+                const todayRevenue2El = document.getElementById('todayRevenue2');
+                const monthRevenue2El = document.getElementById('monthRevenue2');
+                
+                if (yearRevenueEl) yearRevenueEl.textContent = `ETB ${yearRevenue.toLocaleString()}`;
+                if (todayRevenue2El) todayRevenue2El.textContent = `ETB ${todayRevenue.toLocaleString()}`;
+                if (monthRevenue2El) monthRevenue2El.textContent = `ETB ${monthRevenue.toLocaleString()}`;
+            } else if (stats.bookings) {
+                // Fallback: use booking revenue if separate revenue not available
+                const todayRev = stats.bookings.today?.revenue || 0;
+                const monthRev = stats.bookings.month?.revenue || 0;
+                const yearRev = stats.bookings.year?.revenue || 0;
+                
+                document.getElementById('totalRevenue').textContent = `ETB ${yearRev.toLocaleString()}`;
+                document.getElementById('todayRevenue').textContent = `ETB ${todayRev.toLocaleString()}`;
+                document.getElementById('monthRevenue').textContent = `ETB ${monthRev.toLocaleString()}`;
+                
+                const yearRevenueEl = document.getElementById('yearRevenue');
+                const todayRevenue2El = document.getElementById('todayRevenue2');
+                const monthRevenue2El = document.getElementById('monthRevenue2');
+                
+                if (yearRevenueEl) yearRevenueEl.textContent = `ETB ${yearRev.toLocaleString()}`;
+                if (todayRevenue2El) todayRevenue2El.textContent = `ETB ${todayRev.toLocaleString()}`;
+                if (monthRevenue2El) monthRevenue2El.textContent = `ETB ${monthRev.toLocaleString()}`;
+            }
+            
+            // ============================================
+            // BUS STATISTICS (from buses table)
+            // ============================================
+            if (stats.buses) {
+                // Total buses and active count
+                const totalBuses = stats.buses.total || 0;
+                const activeBuses = stats.buses.active || 0;
+                const maintenanceBuses = stats.buses.maintenance || 0;
+                
+                document.getElementById('activeBuses').textContent = totalBuses;
+                document.getElementById('activeBusCount').textContent = activeBuses;
+                document.getElementById('maintenanceBuses').textContent = maintenanceBuses;
+            }
+            
+            // ============================================
+            // ROUTE STATISTICS (from routes table)
+            // ============================================
+            if (stats.routes) {
+                const totalRoutes = stats.routes.total || 0;
+                const activeRoutes = stats.routes.active || 0;
+                
+                document.getElementById('totalRoutes').textContent = totalRoutes;
+                document.getElementById('activeRoutes').textContent = activeRoutes;
+                
+                // Popular routes count
+                const popularCount = (stats.routes.popular && stats.routes.popular.length) || 0;
+                const popularRoutesEl = document.getElementById('popularRoutes');
+                if (popularRoutesEl) {
+                    popularRoutesEl.textContent = popularCount;
+                }
+                
+                // Display popular routes if container exists
+                if (stats.routes.popular && stats.routes.popular.length > 0) {
+                    displayPopularRoutes(stats.routes.popular);
+                }
+            }
+            
+            // ============================================
+            // USER STATISTICS (from users table - EXCLUDING ADMINS)
+            // ============================================
+            if (stats.users) {
+                // Total users (excluding admins - only regular users)
+                const totalUsers = stats.users.total || 0;
+                const activeUsers = stats.users.active || 0;
+                const newUsersToday = stats.users.new_today || 0;
+                
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('activeUsers').textContent = activeUsers;
+                document.getElementById('newUsersToday').textContent = newUsersToday;
+            }
+            
+            // ============================================
+            // UPCOMING TRIPS STATISTICS (from schedules table)
+            // ============================================
+            if (stats.upcoming_trips) {
+                const upcomingCount = stats.upcoming_trips.count || 0;
+                const todayTrips = stats.upcoming_trips.today || 0;
+                const weekTrips = stats.upcoming_trips.next_7_days || 0;
+                
+                const upcomingEl = document.getElementById('upcomingTrips');
+                const todayTripsEl = document.getElementById('todayTrips');
+                const weekTripsEl = document.getElementById('weekTrips');
+                
+                if (upcomingEl) upcomingEl.textContent = upcomingCount;
+                if (todayTripsEl) todayTripsEl.textContent = todayTrips;
+                if (weekTripsEl) weekTripsEl.textContent = weekTrips;
+            }
+            
+            console.log('✅ Dashboard stats displayed successfully from database');
+        }
+
+        function displayPopularRoutes(routes) {
+            const container = document.getElementById('popularRoutesContainer');
+            if (!container || !routes || routes.length === 0) return;
+            
+            container.innerHTML = routes.map(route => `
+                <div class="popular-route-item">
+                    <div class="route-info">
+                        <h4>${route.route_name}</h4>
+                        <p>${route.origin_city} → ${route.destination_city}</p>
+                    </div>
+                    <div class="route-stats">
+                        <span class="booking-count">${route.booking_count} bookings</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayUpcomingTrips(trips) {
+            const container = document.getElementById('upcomingTripsContainer');
+            if (!container) return;
+            
+            if (!trips || trips.length === 0) {
+                container.innerHTML = '<div class="no-trips">No upcoming trips</div>';
+                return;
+            }
+            
+            container.innerHTML = trips.slice(0, 10).map(trip => `
+                <div class="trip-item">
+                    <div class="trip-route">
+                        <h4>${trip.route_name}</h4>
+                        <p>${trip.origin_city} → ${trip.destination_city}</p>
+                    </div>
+                    <div class="trip-details">
+                        <div class="trip-date">${new Date(trip.date).toLocaleDateString()}</div>
+                        <div class="trip-time">${trip.departure_time} - ${trip.arrival_time}</div>
+                        <div class="trip-occupancy">${trip.booked_seats}/${trip.total_seats} seats</div>
+                    </div>
+                    <div class="trip-bus">
+                        <span class="bus-number">${trip.bus_number}</span>
+                        <span class="company-name">${trip.company_name}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showLoadingState() {
+            try {
+                // Show loading indicators on stat cards
+                const statValues = document.querySelectorAll('.stat-value');
+                statValues.forEach(el => {
+                    if (el.textContent === '0' || el.textContent === 'ETB 0') {
+                        el.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    }
+                });
+                
+                // Show loading in alerts container
+                const alertsContainer = document.getElementById('alertsContainer');
+                if (alertsContainer) {
+                    alertsContainer.innerHTML = `
+                        <div class="alert-item info">
+                            <div class="alert-icon">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Loading...</h4>
+                                <p>Fetching real-time system data...</p>
+                            </div>
+                            <div class="alert-time">Now</div>
+                        </div>
+                    `;
+                } else {
+                    console.warn('⚠️ Alerts container not found');
+                }
+            } catch (error) {
+                console.error('Error in showLoadingState:', error);
+            }
+        }
+
+        function hideLoadingState() {
+            try {
+                // Loading state will be replaced by actual data
+                // No need to explicitly hide as data will overwrite loading indicators
+                console.log('✅ Loading state hidden');
+            } catch (error) {
+                console.error('Error in hideLoadingState:', error);
+            }
+        }
+
+        function showErrorMessage(message) {
+            console.error('❌ Error:', message);
+            
+            // Show error in alerts container with more detailed information
+            const alertsContainer = document.getElementById('alertsContainer');
+            if (alertsContainer) {
+                alertsContainer.innerHTML = `
+                    <div class="alert-item critical">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>System Error</h4>
+                            <p>${message}</p>
+                            <small>If this error persists, please contact system administrator.</small>
+                        </div>
+                        <div class="alert-time">
+                            <button onclick="location.reload()" style="background: var(--danger); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-right: 5px;">
+                                <i class="fas fa-redo"></i> Retry
+                            </button>
+                            <button onclick="displaySampleDashboardData(); displayDefaultAlerts(); displayDefaultActivities();" style="background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                                <i class="fas fa-eye"></i> Show Sample Data
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Also show error in browser console with more details
+            console.group('🚨 Admin Dashboard Error Details');
+            console.error('Message:', message);
+            console.error('Timestamp:', new Date().toISOString());
+            console.error('Location:', window.location.href);
+            console.error('User Agent:', navigator.userAgent);
+            if (window.swiftBusAPI) {
+                console.error('API Base URL:', window.swiftBusAPI.baseURL);
+                console.error('API URL:', window.swiftBusAPI.apiURL);
+            }
+            console.groupEnd();
+        }
+
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+            
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                const sidebar = document.getElementById('sidebar');
+                const mobileBtn = document.getElementById('mobileMenuBtn');
+                
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(e.target) && 
+                    !mobileBtn.contains(e.target) &&
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+            
+            // Auto-refresh dashboard data every 5 minutes
+            setInterval(async () => {
+                console.log('🔄 Auto-refreshing dashboard data...');
+                await loadDashboardData();
+            }, 5 * 60 * 1000); // 5 minutes
+        }
+
+        async function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                try {
+                    console.log('🚪 Logging out...');
+                    const response = await swiftBusAPI.request('auth.php?action=logout', {
+                        method: 'POST'
+                    });
+                    
+                    console.log('Logout response:', response);
+                    
+                    // Clear any local storage
+                    localStorage.removeItem('swiftbus_user_loggedin');
+                    localStorage.removeItem('swiftbus_user_data');
+                    
+                    // Redirect to login
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    // Force redirect even if logout API fails
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        function displaySystemAlerts(alerts) {
+            console.log('🔔 Displaying system alerts:', alerts);
+            const container = document.getElementById('alertsContainer');
+            if (!container) return;
+            
+            if (!alerts || alerts.length === 0) {
+                container.innerHTML = `
+                    <div class="alert-item info">
+                        <div class="alert-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>All Systems Operational</h4>
+                            <p>No alerts or issues detected at this time.</p>
+                        </div>
+                        <div class="alert-time">Just now</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = alerts.map(alert => {
+                let alertClass = 'info';
+                let iconClass = 'fas fa-info-circle';
+                
+                if (alert.level === 'error' || alert.level === 'critical') {
+                    alertClass = 'critical';
+                    iconClass = 'fas fa-exclamation-triangle';
+                } else if (alert.level === 'warning') {
+                    alertClass = 'warning';
+                    iconClass = 'fas fa-exclamation-circle';
+                } else if (alert.level === 'success') {
+                    alertClass = 'success';
+                    iconClass = 'fas fa-check-circle';
+                }
+                
+                // Format time
+                let timeDisplay = 'Just now';
+                if (alert.created_at) {
+                    try {
+                        timeDisplay = new Date(alert.created_at).toLocaleTimeString();
+                    } catch (e) {
+                        timeDisplay = alert.created_at;
+                    }
+                }
+                
+                return `
+                    <div class="alert-item ${alertClass}">
+                        <div class="alert-icon">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>${alert.title}</h4>
+                            <p>${alert.message}</p>
+                            ${alert.count ? `<small>Count: ${alert.count}</small>` : ''}
+                        </div>
+                        <div class="alert-time">${timeDisplay}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            console.log('✅ System alerts displayed successfully');
+        }
+
+        function displayRecentActivities(activities) {
+            console.log('📋 Displaying recent activities:', activities);
+            const container = document.getElementById('activityList');
+            if (!container) return;
+            
+            if (!activities || activities.length === 0) {
+                container.innerHTML = `
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>No Recent Activities</h4>
+                            <p>No system activities recorded recently.</p>
+                        </div>
+                        <div class="activity-time">-</div>
+                    </li>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activities.map(activity => {
+                const timeAgo = getTimeAgo(activity.timestamp);
+                return `
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="${activity.icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>${activity.title}</h4>
+                            <p>${activity.description}</p>
+                        </div>
+                        <div class="activity-time">${timeAgo}</div>
+                    </li>
+                `;
+            }).join('');
+            
+            console.log('✅ Recent activities displayed successfully');
+        }
+        
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diffInSeconds = Math.floor((now - time) / 1000);
+            
+            if (diffInSeconds < 60) {
+                return 'Just now';
+            } else if (diffInSeconds < 3600) {
+                const minutes = Math.floor(diffInSeconds / 60);
+                return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+            } else if (diffInSeconds < 86400) {
+                const hours = Math.floor(diffInSeconds / 3600);
+                return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            } else {
+                const days = Math.floor(diffInSeconds / 86400);
+                return `${days} day${days > 1 ? 's' : ''} ago`;
+            }
+        }
+        
+        // ============================================
+        // PROFILE SYNC FUNCTIONS
+        // ============================================
+        
+        // Load cached profile data from localStorage
+        function loadCachedProfileData() {
+            try {
+                const cachedProfile = localStorage.getItem('adminProfileData');
+                if (cachedProfile) {
+                    const profileData = JSON.parse(cachedProfile);
+                    console.log('📦 Loading cached profile data:', profileData);
+                    updateAdminUI(profileData);
+                }
+            } catch (error) {
+                console.error('❌ Failed to load cached profile data:', error);
+            }
+        }
+        
+        // Update sidebar avatar with profile image
+        function updateSidebarAvatar(imageUrl) {
+            if (!imageUrl) return;
+            
+            try {
+                const sidebarAvatar = document.querySelector('.admin-avatar');
+                if (sidebarAvatar) {
+                    // Check if image already exists
+                    let avatarImg = sidebarAvatar.querySelector('img');
+                    if (!avatarImg) {
+                        avatarImg = document.createElement('img');
+                        avatarImg.style.width = '100%';
+                        avatarImg.style.height = '100%';
+                        avatarImg.style.objectFit = 'cover';
+                        avatarImg.style.borderRadius = '50%';
+                        sidebarAvatar.appendChild(avatarImg);
+                    }
+                    avatarImg.src = imageUrl + '?t=' + Date.now();
+                    avatarImg.style.display = 'block';
+                    
+                    // Hide the icon
+                    const avatarIcon = sidebarAvatar.querySelector('i');
+                    if (avatarIcon) avatarIcon.style.display = 'none';
+                    
+                    console.log('✅ Sidebar avatar updated');
+                }
+            } catch (error) {
+                console.error('❌ Failed to update sidebar avatar:', error);
+            }
+        }
+        
+        // Update admin UI elements with profile data
+        function updateAdminUI(profileData) {
+            try {
+                const displayName = profileData.full_name || profileData.name || 'Admin User';
+                
+                // Update sidebar admin name
+                const adminNameElement = document.getElementById('adminName');
+                if (adminNameElement) {
+                    adminNameElement.textContent = displayName;
+                }
+                
+                // Update header user name
+                const userNameElement = document.getElementById('userName');
+                if (userNameElement) {
+                    userNameElement.textContent = displayName.split(' ')[0];
+                }
+                
+                // Update sidebar avatar if profile image exists
+                if (profileData.profile_image) {
+                    updateSidebarAvatar(profileData.profile_image);
+                }
+                
+                console.log('✅ Admin UI updated with profile data');
+            } catch (error) {
+                console.error('❌ Failed to update admin UI:', error);
+            }
+        }
+        
+        // Setup profile sync listener for cross-page updates
+        function setupProfileSyncListener() {
+            // Listen for custom event (same tab)
+            window.addEventListener('adminProfileUpdated', function(e) {
+                console.log('🔄 Profile updated event received:', e.detail);
+                updateAdminUI(e.detail);
+            });
+            
+            // Listen for storage event (other tabs/windows)
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'adminProfileData' && e.newValue) {
+                    try {
+                        const profileData = JSON.parse(e.newValue);
+                        console.log('🔄 Profile updated from another tab:', profileData);
+                        updateAdminUI(profileData);
+                    } catch (error) {
+                        console.error('❌ Failed to parse profile data from storage event:', error);
+                    }
+                }
+            });
+            
+            console.log('✅ Profile sync listener setup complete');
+        }
+    </script>
+
+    <script src="js/api.js"></script>
+    <script src="js/admin-profile-sync.js"></script>
+    <script src="js/admin-modals.js"></script>
+</body>
+</html>
