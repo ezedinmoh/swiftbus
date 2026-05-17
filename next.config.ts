@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: [
+    // Native addon — only used locally, excluded from Vercel bundle
+    "better-sqlite3",
+    "@prisma/adapter-better-sqlite3",
+  ],
 };
 
 export default nextConfig;

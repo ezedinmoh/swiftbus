@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { defineConfig } from "prisma/config";
 
-// Manual .env loader for Prisma Config
+// Manual .env loader for Prisma CLI commands
 try {
   const envPath = path.resolve(__dirname, '.env');
   if (fs.existsSync(envPath)) {
@@ -21,9 +21,13 @@ try {
         process.env[key] = val;
       });
   }
-} catch (err) {
+} catch {
   // Silent fallback
 }
+
+// Production: use Turso (libSQL) — set TURSO_DATABASE_URL in Vercel env vars
+// Development: use local SQLite file via DATABASE_URL
+const dbUrl = process.env.TURSO_DATABASE_URL || process.env.DATABASE_URL || 'file:./dev.db';
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -31,6 +35,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"] || "file:./dev.db",
+    url: dbUrl,
   },
 });
