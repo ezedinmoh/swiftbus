@@ -1,0 +1,551 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+:root {
+  --primary: #1a73e8;
+  --secondary: #ff6d00;
+  --dark: #222;
+  --light: #f8f9fa;
+  --gray: #6c757d;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --accent: #00c6ff;
+  --ethiopia-green: #078930;
+  --ethiopia-yellow: #fcdd09;
+  --ethiopia-red: #da121a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+  z-index: -1;
+}
+
+.btn:hover::before { left: 100%; }
+
+.btn-outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(26, 115, 232, 0.3);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: 2px solid var(--primary);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(26, 115, 232, 0.3);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+  border: 2px solid var(--secondary);
+}
+
+.btn-secondary:hover {
+  background: transparent;
+  color: var(--secondary);
+  transform: translateY(-3px);
+}
+
+/* Section Titles */
+.section-title {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.section-title h2 {
+  font-size: 36px;
+  color: var(--dark);
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--secondary);
+  border-radius: 2px;
+}
+
+.section-title p {
+  color: var(--gray);
+  max-width: 600px;
+  margin: 20px auto 0;
+  font-size: 18px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: scaleY(0); opacity: 0; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Footer */
+footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+  padding: 60px 0 30px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-column h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: white;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--secondary);
+  border-radius: 2px;
+}
+
+.footer-column p {
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.7);
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.7);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-links a:hover {
+  color: var(--secondary);
+  padding-left: 5px;
+}
+
+.footer-links i {
+  color: var(--secondary);
+  width: 16px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.social-links a:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  transform: translateY(-3px);
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+}
+
+.back-to-top:hover {
+  background: var(--secondary);
+  transform: translateY(-5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title h2 { font-size: 28px; }
+  .section-title p { font-size: 16px; }
+}
+
+/* ==========================================
+   GLOBAL PREMIUM DARK MODE THEME OVERRIDES
+   ========================================== */
+
+/* Universal Elements Force Border Restyling */
+html.dark-theme *,
+html.dark-theme *::before,
+html.dark-theme *::after {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Force dark backgrounds on ALL core layouts, containers, sections, wrappers, and cards (EXCLUDING the Hero Section) */
+html.dark-theme,
+html.dark-theme body,
+html.dark-theme main,
+html.dark-theme section:not([class*="hero"]):not([class*="Hero"]),
+html.dark-theme article,
+html.dark-theme aside,
+html.dark-theme header,
+html.dark-theme nav,
+html.dark-theme footer,
+html.dark-theme form,
+html.dark-theme table,
+html.dark-theme thead,
+html.dark-theme tbody,
+html.dark-theme tr,
+html.dark-theme td,
+html.dark-theme th,
+html.dark-theme div:not([class*="hero"]):not([class*="Hero"]),
+html.dark-theme ul,
+html.dark-theme li {
+  background-color: #121212 !important;
+  background-image: none !important;
+  color: #f8f9fa !important;
+}
+
+/* Protect and retain the Hero Section background image in dark mode */
+html.dark-theme [class*="hero"],
+html.dark-theme [class*="Hero"] {
+  background-image: url('/swiftbus.jpg') !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Universal Header details */
+html.dark-theme header {
+  background-color: rgba(18, 18, 18, 0.95) !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+/* Navigation, buttons, links, icons typography overrides inside header */
+html.dark-theme header a,
+html.dark-theme header span {
+  color: #e2e8f0 !important;
+}
+html.dark-theme header .logo h1 {
+  text-shadow: none !important;
+}
+html.dark-theme header a[style*="color: var(--primary)"],
+html.dark-theme header a[style*="color:var(--primary)"] {
+  color: var(--primary) !important;
+}
+
+/* Elevate specific card-like components to a premium lighter gray so the UI has beautiful depth and hierarchy */
+html.dark-theme [class*="card"],
+html.dark-theme [class*="Card"],
+html.dark-theme [class*="box"],
+html.dark-theme [class*="Box"],
+html.dark-theme [class*="item"],
+html.dark-theme [class*="Item"],
+html.dark-theme [class*="popup"],
+html.dark-theme [class*="Popup"],
+html.dark-theme [class*="dropdown"],
+html.dark-theme [class*="Dropdown"],
+html.dark-theme [class*="modal"],
+html.dark-theme [class*="Modal"],
+html.dark-theme [class*="detail"],
+html.dark-theme [class*="Detail"],
+html.dark-theme [class*="featureCard"],
+html.dark-theme [class*="routeCard"],
+html.dark-theme [class*="companyCard"],
+html.dark-theme [class*="paymentCard"],
+html.dark-theme [class*="searchCard"],
+html.dark-theme [class*="cityCard"],
+html.dark-theme [class*="faqItem"],
+html.dark-theme [class*="popularCard"],
+html.dark-theme [class*="paymentCard"] {
+  background-color: #1e1e1e !important;
+}
+
+html.dark-theme [class*="card"]:hover,
+html.dark-theme [class*="Card"]:hover,
+html.dark-theme [class*="item"]:hover,
+html.dark-theme [class*="Item"]:hover {
+  background-color: #252525 !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Form input fields, buttons, selects, and textareas */
+html.dark-theme input,
+html.dark-theme select,
+html.dark-theme textarea {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+html.dark-theme select option {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+/* Text overrides to guarantee zero black-on-black or illegible gray-on-dark text */
+html.dark-theme h1,
+html.dark-theme h2,
+html.dark-theme h3,
+html.dark-theme h4,
+html.dark-theme h5,
+html.dark-theme h6,
+html.dark-theme strong,
+html.dark-theme th,
+html.dark-theme [class*="Title"],
+html.dark-theme [class*="title"] h2,
+html.dark-theme [class*="header"] h2,
+html.dark-theme [class*="faqQuestion"] h3 {
+  color: #ffffff !important;
+}
+
+html.dark-theme p,
+html.dark-theme span,
+html.dark-theme li,
+html.dark-theme label,
+html.dark-theme td,
+html.dark-theme a,
+html.dark-theme small,
+html.dark-theme i,
+html.dark-theme div,
+html.dark-theme [class*="desc"],
+html.dark-theme [class*="Desc"],
+html.dark-theme [class*="details"],
+html.dark-theme [class*="Details"],
+html.dark-theme [class*="answer"],
+html.dark-theme [class*="Answer"],
+html.dark-theme [class*="subtitle"],
+html.dark-theme [class*="Subtitle"],
+html.dark-theme [class*="meta"],
+html.dark-theme [class*="Meta"] {
+  color: #cbd5e1 !important;
+}
+
+/* Primary/Secondary Buttons and badges should retain their distinct brand colors! */
+html.dark-theme .btn-primary,
+html.dark-theme [class*="btn-primary"],
+html.dark-theme button[style*="background: var(--primary)"],
+html.dark-theme div[style*="background: var(--primary)"],
+html.dark-theme a[style*="background: var(--primary)"] {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+html.dark-theme .btn-secondary,
+html.dark-theme [class*="btn-secondary"],
+html.dark-theme button[style*="background: var(--secondary)"],
+html.dark-theme div[style*="background: var(--secondary)"],
+html.dark-theme a[style*="background: var(--secondary)"] {
+  background-color: var(--secondary) !important;
+  color: #ffffff !important;
+}
+
+/* Outline buttons should invert gracefully */
+html.dark-theme .btn-outline {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+  background: transparent !important;
+}
+html.dark-theme .btn-outline:hover {
+  background: #ffffff !important;
+  color: #121212 !important;
+}
+
+/* Font awesome and other inline decorative icons */
+html.dark-theme i[class*="fa-"] {
+  color: var(--primary) !important;
+  background: transparent !important;
+}
+
+/* Footer Hover details */
+html.dark-theme footer a:hover {
+  color: var(--secondary) !important;
+  padding-left: 5px !important;
+}
+
+/* Search results listing specific overrides */
+html.dark-theme div[style*="border: 1px solid #f0f0f0"] {
+  background-color: #1e1e1e !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+html.dark-theme div[style*="border-left: 1px solid #eee"] {
+  border-left-color: rgba(255,255,255,0.08) !important;
+}
+html.dark-theme div[style*="color: var(--dark)"] {
+  color: #ffffff !important;
+}
+
+/* Tables & Ticket Dashboards */
+html.dark-theme table {
+  color: #ffffff !important;
+}
+html.dark-theme thead,
+html.dark-theme thead[style*="background: #f8f9fa"] {
+  background-color: #2d2d2d !important;
+}
+html.dark-theme tr {
+  border-bottom-color: rgba(255,255,255,0.08) !important;
+}
+html.dark-theme td {
+  color: #cbd5e1 !important;
+}
+html.dark-theme tr[style*="border-bottom: 1px solid #f0f0f0"] {
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Admin Sidebar Layout */
+html.dark-theme aside {
+  background: #111111 !important;
+  border-right-color: rgba(255,255,255,0.05) !important;
+}
+html.dark-theme aside div[style*="border-bottom: 1px solid #eef2f6"] {
+  border-bottom-color: rgba(255,255,255,0.05) !important;
+}
+html.dark-theme aside p,
+html.dark-theme aside h3,
+html.dark-theme aside a {
+  color: #ffffff !important;
+}
+html.dark-theme .sidebar-link:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: var(--primary) !important;
+}
+html.dark-theme aside div[style*="border-top: 1px solid #eef2f6"] {
+  border-top-color: rgba(255,255,255,0.05) !important;
+}
+
+
+

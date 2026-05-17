@@ -1,0 +1,197 @@
+.signupContainerWrapper {
+  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  margin-top: 70px;
+}
+
+.signupContainer {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 550px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.signupContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #ff6d00, #ff8c00);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo h1 {
+  color: #1a73e8;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.logo span {
+  color: #ff6d00;
+}
+
+.logo p {
+  color: #666;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.signupHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.signupHeader h2 {
+  color: #222;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.signupHeader p {
+  color: #666;
+  font-size: 14px;
+}
+
+.signupForm {
+  width: 100%;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.formControl {
+  width: 100%;
+  padding: 15px 45px 15px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.formControl:focus {
+  outline: none;
+  border-color: #1a73e8;
+  background: white;
+  box-shadow: 0 5px 15px rgba(26, 115, 232, 0.1);
+}
+
+.inputIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.formOptions {
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.signupBtn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(45deg, #1a73e8, #0d47a1);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.signupBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.formError {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(220, 53, 69, 0.08);
+  border: 1px solid rgba(220, 53, 69, 0.25);
+  color: #b02a37;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.signupBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(26, 115, 232, 0.3);
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 15px;
+  color: #666;
+  font-size: 14px;
+}
+
+.loginLink a {
+  color: #1a73e8;
+  font-weight: 600;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}

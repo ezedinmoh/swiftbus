@@ -1,0 +1,366 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  user_id        String    @unique
+  email          String    @unique
+  password_hash  String
+  first_name     String
+  last_name      String
+  full_name      String
+  phone          String?
+  role           Role      @default(user)
+  is_verified    Boolean   @default(false)
+  is_active      Boolean   @default(true)
+  profile_image  String?
+  joined_date    DateTime
+  last_login     DateTime?
+  login_attempts Int       @default(0)
+  locked_until   DateTime?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+
+  sessions       UserSession[]
+  activity_logs  ActivityLog[]
+  bookings       Booking[]
+  reviews        Review[]
+  notifications  Notification[]
+
+  @@map("users")
+}
+
+model UserSession {
+  id            Int      @id @default(autoincrement())
+  session_id    String   @unique
+  user_id       Int
+  ip_address    String
+  user_agent    String?
+  is_active     Boolean  @default(true)
+  last_activity DateTime @default(now())
+  expires_at    DateTime
+  created_at    DateTime @default(now())
+
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_sessions")
+}
+
+model ActivityLog {
+  id          Int      @id @default(autoincrement())
+  user_id     Int?
+  session_id  String?
+  action      String
+  entity_type String?
+  entity_id   String?
+  description String?
+  metadata    Json?
+  ip_address  String?
+  user_agent  String?
+  created_at  DateTime @default(now())
+
+  user        User?    @relation(fields: [user_id], references: [id], onDelete: SetNull)
+
+  @@map("activity_logs")
+}
+
+model City {
+  id         Int      @id @default(autoincrement())
+  city_code  String   @unique
+  name       String
+  region     String?
+  country    String?  @default("Ethiopia")
+  latitude   Decimal?
+  longitude  Decimal?
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  routes_origin      Route[] @relation("OriginCity")
+  routes_destination Route[] @relation("DestinationCity")
+
+  @@map("cities")
+}
+
+model BusCompany {
+  id            Int      @id @default(autoincrement())
+  company_id    String   @unique
+  name          String
+  logo          String?
+  description   String?
+  rating        Decimal? @default(0.00)
+  total_reviews Int      @default(0)
+  contact_phone String?
+  contact_email String?
+  website       String?
+  is_active     Boolean  @default(true)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  buses         Bus[]
+  reviews       Review[]
+
+  @@map("bus_companies")
+}
+
+model Route {
+  id                       Int      @id @default(autoincrement())
+  route_id                 String   @unique
+  origin_city_id           Int
+  destination_city_id      Int
+  distance_km              Int?
+  estimated_duration_hours Decimal?
+  base_price               Decimal
+  is_active                Boolean  @default(true)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+
+  origin_city      City       @relation("OriginCity", fields: [origin_city_id], references: [id], onDelete: Cascade)
+  destination_city City       @relation("DestinationCity", fields: [destination_city_id], references: [id], onDelete: Cascade)
+  schedules        Schedule[]
+
+  @@unique([origin_city_id, destination_city_id])
+  @@map("routes")
+}
+
+model Bus {
+  id                    Int       @id @default(autoincrement())
+  bus_id                String    @unique
+  company_id            Int
+  bus_number            String
+  bus_type              BusType
+  total_seats           Int
+  amenities             Json?
+  status                BusStatus @default(active)
+  license_plate         String?   @unique
+  model                 String?
+  year_manufactured     Int?
+  last_maintenance_date DateTime?
+  next_maintenance_date DateTime?
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+
+  company   BusCompany @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  schedules Schedule[]
+
+  @@map("buses")
+}
+
+model Schedule {
+  id              Int       @id @default(autoincrement())
+  schedule_id     String    @unique
+  bus_id          Int
+  route_id        Int
+  departure_time  DateTime
+  arrival_time    DateTime
+  days_of_week    Json
+  price           Decimal
+  is_active       Boolean   @default(true)
+  effective_from  DateTime
+  effective_until DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  bus      Bus       @relation(fields: [bus_id], references: [id], onDelete: Cascade)
+  route    Route     @relation(fields: [route_id], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@map("schedules")
+}
+
+model Booking {
+  id                   Int           @id @default(autoincrement())
+  booking_id           String        @unique
+  user_id              Int
+  schedule_id          Int?
+  bus_company          String
+  bus_type             String
+  from_city            String
+  to_city              String
+  travel_date          DateTime
+  departure_time       String
+  passenger_count      Int           @default(1)
+  selected_seats       Json?
+  passenger_details    Json
+  total_amount         Decimal
+  booking_status       BookingStatus @default(pending)
+  payment_status       PaymentStatus @default(pending)
+  payment_method       String?
+  payment_reference    String?
+  special_requirements String?
+  qr_code              String?
+  booking_date         DateTime      @default(now())
+  cancellation_date    DateTime?
+  cancellation_reason  String?
+  created_at           DateTime      @default(now())
+  updated_at           DateTime      @updatedAt
+
+  user     User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  schedule Schedule? @relation(fields: [schedule_id], references: [id], onDelete: SetNull)
+
+  @@index([bus_company, from_city, to_city, travel_date], name: "idx_company_route")
+  @@map("bookings")
+}
+
+model BusSeat {
+  id             Int       @id @default(autoincrement())
+  bus_company    String
+  bus_type       String
+  route          String
+  departure_date DateTime
+  departure_time String
+  seat_number    Int
+  seat_type      SeatType  @default(regular)
+  is_occupied    Boolean   @default(false)
+  booking_id     String?
+  reserved_until DateTime?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+
+  @@unique([bus_company, bus_type, route, departure_date, departure_time, seat_number], name: "unique_seat_booking")
+  @@map("bus_seats")
+}
+
+model Payment {
+  id                    Int           @id @default(autoincrement())
+  payment_id            String        @unique
+  booking_id            String
+  passenger_name        String?
+  passenger_email       String?
+  amount                Decimal
+  payment_method        PaymentMethod
+  payment_status        PayStatus     @default(pending)
+  transaction_reference String?
+  gateway_response      Json?
+  payment_date          DateTime?
+  refund_date           DateTime?
+  refund_amount         Decimal?      @default(0.00)
+  created_at            DateTime      @default(now())
+  updated_at            DateTime      @updatedAt
+
+  @@map("payments")
+}
+
+model Review {
+  id             Int      @id @default(autoincrement())
+  review_id      String   @unique
+  user_id        Int
+  booking_id     String
+  company_id     Int
+  rating         Int
+  review_text    String?
+  is_verified    Boolean  @default(false)
+  is_published   Boolean  @default(true)
+  admin_response String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  user    User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  company BusCompany @relation(fields: [company_id], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+model Notification {
+  id              Int              @id @default(autoincrement())
+  notification_id String           @unique
+  user_id         Int
+  type            NotificationType
+  title           String
+  message         String
+  data            Json?
+  is_read         Boolean          @default(false)
+  read_at         DateTime?
+  created_at      DateTime         @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model SystemSetting {
+  id            Int         @id @default(autoincrement())
+  setting_key   String      @unique
+  setting_value String?
+  setting_type  SettingType @default(string)
+  description   String?
+  is_public     Boolean     @default(false)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  @@map("system_settings")
+}
+
+// Enums
+enum Role {
+  user
+  admin
+}
+
+enum BusType {
+  economy
+  standard
+  standard_ac @map("standard-ac")
+  premium_ac  @map("premium-ac")
+  luxury
+}
+
+enum BusStatus {
+  active
+  maintenance
+  inactive
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  cancelled
+  completed
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  refunded
+  failed
+}
+
+enum SeatType {
+  regular
+  women_only @map("women-only")
+  accessible
+}
+
+enum PaymentMethod {
+  telebirr
+  cbe
+  dashen
+  card
+  cash
+}
+
+enum PayStatus {
+  pending
+  processing
+  completed
+  failed
+  refunded
+}
+
+enum NotificationType {
+  booking
+  payment
+  system
+  promotion
+}
+
+enum SettingType {
+  string
+  number
+  boolean
+  json
+}

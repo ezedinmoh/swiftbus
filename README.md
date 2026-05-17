@@ -1,355 +1,283 @@
-# 🚌 SwiftBus - Ethiopian Bus Booking System
+# SwiftBus - Ethiopian Bus Booking System
 
-<p align="center">
-  <img src="swiftbus.jpg" alt="SwiftBus Logo" width="200">
-</p>
+A comprehensive bus booking system built with HTML, CSS, JavaScript frontend and PHP backend with MySQL database.
 
-<p align="center">
-  <strong>A modern, full-stack web application for booking bus tickets across Ethiopia</strong>
-</p>
+## Features
 
-<p align="center">
-  <a href="#features">Features</a> •
-  <a href="#demo">Demo</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#technologies">Technologies</a>
-</p>
+### User Features
+- **User Registration & Authentication** - Secure signup/login with role-based access
+- **Bus Search & Booking** - Search buses by route, date, and passenger count
+- **Seat Selection** - Interactive seat map with real-time availability
+- **Multiple Payment Methods** - Telebirr, CBE, Dashen Bank, Credit/Debit Cards
+- **Booking Management** - View, modify, and cancel bookings
+- **QR Code Tickets** - Digital tickets with QR codes for verification
+- **User Dashboard** - Personal dashboard with booking history and statistics
 
----
+### Admin Features
+- **Admin Dashboard** - Comprehensive overview with statistics and analytics
+- **Bus Management** - Add, edit, and manage bus fleet
+- **Route Management** - Create and manage bus routes between cities
+- **Schedule Management** - Set up bus schedules and timetables
+- **Booking Management** - View and manage all bookings
+- **Revenue Reports** - Financial reports and analytics
+- **User Management** - Manage user accounts and permissions
 
-## 📋 About The Project
+### Technical Features
+- **Responsive Design** - Works on desktop, tablet, and mobile devices
+- **RESTful API** - Clean PHP API architecture
+- **Database Integration** - MySQL database with proper relationships
+- **Security** - Password hashing, SQL injection prevention, XSS protection
+- **Real-time Updates** - Dynamic content updates without page refresh
+- **Error Handling** - Comprehensive error handling and user feedback
 
-**SwiftBus** is a comprehensive online bus ticket booking system designed specifically for the Ethiopian transportation market. The platform connects passengers with major bus operators, enabling seamless ticket booking, seat selection, and digital payment processing.
-
-### 🎯 Purpose
-
-The Ethiopian bus transportation industry traditionally relies on physical ticket counters, leading to:
-- Long queues at bus stations
-- No way to check seat availability in advance
-- Cash-only transactions
-- Paper tickets that can be lost
-- Difficulty comparing prices across operators
-
-**SwiftBus solves these problems** by providing a digital platform where users can:
-- Search and compare buses from multiple operators
-- Book tickets online 24/7 from anywhere
-- Select preferred seats visually
-- Pay using multiple digital payment methods
-- Receive instant digital tickets with QR codes
-
----
-
-## ✨ Features
-
-### 👤 User Features
-
-| Feature | Description |
-|---------|-------------|
-| 🔍 **Smart Search** | Search buses by route, date, and preferences |
-| 🪑 **Interactive Seat Selection** | Visual seat map with real-time availability |
-| 💳 **Multiple Payment Options** | Telebirr, CBE, Dashen Bank, Credit/Debit Cards |
-| 📱 **QR Code Tickets** | Digital tickets with scannable QR codes |
-| 📊 **Booking History** | View all past and upcoming trips |
-| 👤 **Profile Management** | Update personal information and preferences |
-| 🔔 **Notifications** | Booking confirmations and travel reminders |
-
-### 🔧 Admin Features
-
-| Feature | Description |
-|---------|-------------|
-| 📈 **Dashboard Analytics** | Real-time statistics and insights |
-| 👥 **User Management** | View, edit, and manage user accounts |
-| 🚌 **Fleet Management** | Add, update, and track buses |
-| 🛣️ **Route Management** | Configure routes between cities |
-| 📅 **Schedule Management** | Set departure times and frequencies |
-| 📋 **Booking Management** | View and manage all bookings |
-| ⚙️ **System Settings** | Configure application parameters |
-
-### 🔐 Security Features
-
-- **Password Hashing** - Secure bcrypt encryption
-- **SQL Injection Prevention** - Prepared statements for all queries
-- **Session Management** - Secure user authentication
-- **Input Validation** - 3-layer validation (HTML, JavaScript, PHP)
-- **Role-Based Access** - Separate user and admin permissions
-
----
-
-## 🚌 Supported Bus Companies
-
-| Company | Type | Rating |
-|---------|------|--------|
-| **Selam Bus** | Premium/Luxury | ⭐ 4.8 |
-| **Abay Bus** | Standard | ⭐ 4.5 |
-| **Ethio Bus** | Economy | ⭐ 4.2 |
-| **Habesha Bus** | Premium | ⭐ 4.4 |
-
----
-
-## 🗺️ Supported Cities
-
-The system covers **10 major Ethiopian cities**:
-
-| City | Region |
-|------|--------|
-| Addis Ababa | Capital |
-| Bahirdar | Amhara |
-| Gonder | Amhara |
-| Mekele | Tigray |
-| Dessie | Amhara |
-| Kombolcha | Amhara |
-| Adama | Oromia |
-| Hawasa | SNNPR |
-| Arbaminch | SNNPR |
-| Jimma | Oromia |
-
----
-
-## 🖥️ Demo Screenshots
-
-### Homepage
-- Hero section with search functionality
-- Featured bus companies
-- Popular routes display
-
-### Booking Process
-1. **Search** - Select origin, destination, and date
-2. **Select Bus** - Choose from available options
-3. **Choose Seats** - Interactive seat map
-4. **Passenger Details** - Enter traveler information
-5. **Payment** - Select payment method
-6. **Confirmation** - Receive digital ticket with QR code
-
-### Admin Dashboard
-- Real-time statistics
-- Recent bookings
-- System alerts
-- Quick actions
-
----
-
-## 🛠️ Technologies Used
+## Technology Stack
 
 ### Frontend
-| Technology | Purpose |
-|------------|---------|
-| HTML5 | Page structure |
-| CSS3 | Styling and responsive design |
-| JavaScript (ES6+) | Interactivity and API calls |
-| Font Awesome | Icons |
-| QRCode.js | QR code generation |
+- **HTML5** - Semantic markup and structure
+- **CSS3** - Modern styling with Flexbox and Grid
+- **JavaScript (ES6+)** - Interactive functionality and API integration
+- **Font Awesome** - Icons and visual elements
+- **Google Fonts** - Typography (Poppins font family)
 
 ### Backend
-| Technology | Purpose |
-|------------|---------|
-| PHP 7.4+ | Server-side logic |
-| PDO | Database connectivity |
-| JSON | API data format |
+- **PHP 7.4+** - Server-side logic and API endpoints
+- **MySQL 5.7+** - Database management
+- **PDO** - Database abstraction layer
+- **JSON** - Data exchange format
 
-### Database
-| Technology | Purpose |
-|------------|---------|
-| MySQL 5.7+ | Data storage |
-| 12 Tables | Complete data model |
-
-### Development
-| Tool | Purpose |
-|------|---------|
-| XAMPP | Local development server |
-| Git | Version control |
-| VS Code / Kiro | Code editor |
-
----
-
-## 📦 Installation
+## Installation & Setup
 
 ### Prerequisites
-- PHP 7.4 or higher
-- MySQL 5.7 or higher
-- Apache web server (or XAMPP)
-- Git
+- **Web Server** - Apache or Nginx
+- **PHP 7.4 or higher** with extensions:
+  - PDO
+  - PDO_MySQL
+  - JSON
+  - Session
+- **MySQL 5.7 or higher**
+- **Modern Web Browser** - Chrome, Firefox, Safari, Edge
 
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/ezedinmoh/swiftbus.git
-cd swiftbus
-```
+### Step 1: Download and Extract
+1. Download the SwiftBus project files
+2. Extract to your web server directory (e.g., `htdocs`, `www`, `public_html`)
 
-### Step 2: Set Up Database
-1. Open phpMyAdmin (http://localhost/phpmyadmin)
-2. Create a new database named `swiftbus_db`
-3. Import the SQL file:
-   - Click on `swiftbus_db`
-   - Go to "Import" tab
-   - Choose `swiftbus_database_clean.sql`
-   - Click "Go"
-
-### Step 3: Configure Database Connection
-Edit `config/database.php`:
+### Step 2: Database Configuration
+1. Open `config/database.php`
+2. Update database connection settings:
 ```php
-$host = 'localhost';
-$dbname = 'swiftbus_db';
-$username = 'root';
-$password = '';  // Your MySQL password
+private $host = 'localhost';        // Your database host
+private $db_name = 'swiftbus_db';   // Database name
+private $username = 'root';         // Database username
+private $password = '';             // Database password
 ```
 
-### Step 4: Start the Server
-If using XAMPP:
-1. Start Apache and MySQL from XAMPP Control Panel
-2. Place project in `C:\xampp\htdocs\swiftbus`
-3. Open browser: `http://localhost/swiftbus`
+### Step 3: Initialize Database
+1. Open your web browser
+2. Navigate to `http://your-domain/init.php`
+3. Follow the initialization process
+4. The script will:
+   - Create the database and tables
+   - Insert sample data (cities, companies, routes, buses, schedules)
+   - Create default admin and test user accounts
 
----
+### Step 4: Access the Application
+- **Main Application**: `http://your-domain/index.html`
+- **Admin Panel**: Login with admin credentials and access admin dashboard
 
-## 👥 Default Accounts
+## Default Accounts
 
-### Admin Accounts
-| Email | Password |
-|-------|----------|
-| ezedinmoh1@gmail.com | password123 |
-| hanamariamsebsbew1@gmail.com | password123 |
-| mubarekali974@gmail.com | password123 |
-| wubetlemma788@gmail.com | password123 |
-| mahletbelete4@gmail.com | password123 |
+### Admin Account
+- **Email**: `admin@swiftbus.et`
+- **Password**: `admin123`
+- **Role**: Administrator
 
-### Test User
-Create a new account through the signup page or use the booking flow.
+### Test User Account
+- **Email**: `user@test.com`
+- **Password**: `password123`
+- **Role**: Regular User
 
----
+### Predefined Admin Emails
+The following emails are automatically assigned admin role:
+- `ezedinmoh1@gmail.com`
+- `hanamariamsebsbew1@gmail.com`
+- `mubarekali974@gmail.com`
+- `wubetlemma788@gmail.com`
+- `mahletbelete4@gmail.com`
 
-## 📁 Project Structure
+## File Structure
 
 ```
 swiftbus/
-│
-├── 📂 api/                    # Backend API endpoints
-│   ├── auth.php               # Authentication (login, signup, logout)
-│   ├── dashboard.php          # User dashboard data
-│   ├── search.php             # Bus search functionality
-│   ├── payment.php            # Payment processing
-│   ├── admin_users.php        # Admin user management
-│   ├── admin_bookings.php     # Admin booking management
-│   ├── admin_buses.php        # Admin bus management
-│   ├── admin_routes.php       # Admin route management
-│   └── admin_schedules.php    # Admin schedule management
-│
-├── 📂 config/
-│   └── database.php           # Database configuration
-│
-├── 📂 includes/
-│   └── functions.php          # Reusable PHP functions
-│
-├── 📂 js/
-│   ├── api.js                 # JavaScript API helper
-│   ├── admin-data-provider.js # Admin data functions
-│   └── admin-profile-sync.js  # Profile synchronization
-│
-├── 📂 uploads/
-│   └── avatars/               # User profile pictures
-│
-├── 📄 index.html              # Homepage
-├── 📄 login.html              # User login
-├── 📄 signup.html             # User registration
-├── 📄 book-ticket.html        # Ticket booking (4 steps)
-├── 📄 payment.html            # Payment processing
-├── 📄 my-tickets.html         # User's tickets
-├── 📄 user-dashboard.html     # User dashboard
-├── 📄 user-profile.html       # User profile
-├── 📄 admin-dashboard.html    # Admin dashboard
-├── 📄 admin-*.html            # Admin management pages
-│
-└── 📄 swiftbus_database_clean.sql  # Database schema
+├── config/
+│   └── database.php          # Database configuration
+├── includes/
+│   └── functions.php         # Common PHP functions
+├── api/
+│   ├── auth.php             # Authentication API
+│   ├── search.php           # Search and routes API
+│   ├── booking.php          # Booking management API
+│   ├── payment.php          # Payment processing API
+│   └── admin.php            # Admin operations API
+├── js/
+│   └── api.js               # Frontend API integration
+├── HTML Files/
+│   ├── index.html           # Homepage
+│   ├── login.html           # User login
+│   ├── signup.html          # User registration
+│   ├── search.html          # Bus search
+│   ├── book-ticket.html     # Ticket booking
+│   ├── payment.html         # Payment processing
+│   ├── my-tickets.html      # User tickets
+│   ├── user-dashboard.html  # User dashboard
+│   └── admin-*.html         # Admin pages
+├── init.php                 # Database initialization
+└── README.md               # This file
 ```
 
----
+## API Endpoints
 
-## �  How It Works
+### Authentication (`/api/auth.php`)
+- `POST ?action=register` - User registration
+- `POST ?action=login` - User login
+- `POST ?action=logout` - User logout
+- `GET ?action=check_session` - Check session status
 
+### Search (`/api/search.php`)
+- `GET ?action=search_buses` - Search available buses
+- `GET ?action=get_cities` - Get all cities
+- `GET ?action=get_routes` - Get all routes
+- `GET ?action=get_available_seats` - Get available seats
+- `GET ?action=get_popular_routes` - Get popular routes
+
+### Booking (`/api/booking.php`)
+- `POST ?action=create_booking` - Create new booking
+- `GET ?action=get_user_bookings` - Get user's bookings
+- `GET ?action=get_booking_details` - Get booking details
+- `POST ?action=cancel_booking` - Cancel booking
+- `GET ?action=get_booking_stats` - Get booking statistics
+
+### Payment (`/api/payment.php`)
+- `POST ?action=process_payment` - Process payment
+- `GET ?action=verify_payment` - Verify payment status
+- `GET ?action=get_payment_methods` - Get available payment methods
+- `GET ?action=get_payment_status` - Get payment status
+
+### Admin (`/api/admin.php`)
+- `GET ?action=get_dashboard_stats` - Get admin dashboard stats
+- `GET ?action=get_all_bookings` - Get all bookings (admin)
+- `GET ?action=get_buses` - Get all buses
+- `POST ?action=create_bus` - Create new bus
+- `GET ?action=get_schedules` - Get all schedules
+- `POST ?action=create_schedule` - Create new schedule
+
+## Database Schema
+
+### Main Tables
+- **users** - User accounts and authentication
+- **bus_companies** - Bus operating companies
+- **cities** - Ethiopian cities and locations
+- **routes** - Bus routes between cities
+- **buses** - Bus fleet information
+- **schedules** - Bus schedules and timetables
+- **bookings** - Ticket bookings and reservations
+- **payments** - Payment transactions and records
+- **reviews** - User reviews and ratings
+- **admin_logs** - Admin activity logging
+
+## Configuration
+
+### Payment Methods
+The system supports multiple payment methods:
+- **Telebirr** - Ethiopian mobile money service
+- **CBE** - Commercial Bank of Ethiopia
+- **Dashen Bank** - Dashen Bank payment gateway
+- **Credit/Debit Cards** - International card payments
+
+*Note: Payment processing is simulated for demo purposes. Integrate with actual payment gateways for production use.*
+
+### Customization
+- **Cities**: Add/modify cities in the database `cities` table
+- **Bus Companies**: Manage companies through admin panel or database
+- **Routes**: Create routes through admin panel
+- **Pricing**: Set prices per route and bus type
+- **Amenities**: Configure bus amenities in JSON format
+
+## Security Features
+
+- **Password Hashing** - Secure password storage using PHP's password_hash()
+- **SQL Injection Prevention** - Prepared statements with PDO
+- **XSS Protection** - Input sanitization and output escaping
+- **Session Management** - Secure session handling
+- **Role-based Access Control** - Admin and user role separation
+- **Input Validation** - Server-side and client-side validation
+
+## Browser Support
+
+- **Chrome** 60+
+- **Firefox** 55+
+- **Safari** 12+
+- **Edge** 79+
+- **Mobile Browsers** - iOS Safari, Chrome Mobile
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Database Connection Error**
+   - Check database credentials in `config/database.php`
+   - Ensure MySQL server is running
+   - Verify database exists and user has permissions
+
+2. **API Errors**
+   - Check PHP error logs
+   - Ensure all required PHP extensions are installed
+   - Verify file permissions
+
+3. **Session Issues**
+   - Check PHP session configuration
+   - Ensure session directory is writable
+   - Clear browser cookies and cache
+
+4. **Payment Processing**
+   - Payment methods are simulated for demo
+   - Integrate with actual payment gateways for production
+
+### Debug Mode
+Enable PHP error reporting for debugging:
+```php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│    FRONTEND     │────▶│    BACKEND      │────▶│    DATABASE     │
-│  (HTML/CSS/JS)  │◀────│     (PHP)       │◀────│    (MySQL)      │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-     Browser              Server                  Data Storage
-```
 
-1. **User interacts** with the frontend (clicks, fills forms)
-2. **JavaScript sends** request to PHP API
-3. **PHP processes** the request and queries database
-4. **Database returns** data to PHP
-5. **PHP sends** JSON response to JavaScript
-6. **JavaScript updates** the page with new data
+## Contributing
 
----
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## 🎯 Benefits
+## License
 
-### For Passengers
-- ✅ Book tickets anytime, anywhere
-- ✅ Compare prices across operators
-- ✅ Choose preferred seats
-- ✅ Multiple payment options
-- ✅ Digital tickets (no paper)
-- ✅ Booking history and tracking
+This project is licensed under the MIT License. See LICENSE file for details.
 
-### For Bus Operators
-- ✅ Reach more customers online
-- ✅ Reduce manual ticketing work
-- ✅ Real-time booking management
-- ✅ Analytics and insights
-- ✅ Reduced no-shows with digital tickets
+## Support
 
-### For the Industry
-- ✅ Modernized transportation sector
-- ✅ Reduced queues at stations
-- ✅ Better resource utilization
-- ✅ Data-driven decision making
+For support and questions:
+- **Email**: support@swiftbus.et
+- **Documentation**: Check this README and code comments
+- **Issues**: Report bugs and feature requests
+
+## Changelog
+
+### Version 1.0.0
+- Initial release
+- Complete booking system functionality
+- Admin panel with full management features
+- Multiple payment method support
+- Responsive design for all devices
+- Comprehensive API documentation
 
 ---
 
-## 🚀 Future Enhancements
-
-- [ ] Real payment gateway integration (Telebirr API, Chapa)
-- [ ] SMS notifications
-- [ ] Mobile application (Android/iOS)
-- [ ] Live bus tracking
-- [ ] Multi-language support (Amharic, Oromiffa)
-- [ ] Email confirmations
-- [ ] Loyalty/rewards program
-- [ ] Group booking discounts
-
----
-
-## 👨‍💻 Contributors
-
-| Name | Role |
-|------|------|
-| Ezedin Mohammed | Developer |
-| Hana Mariam Sebsbew | Developer |
-| Mubarek Ali | Developer |
-| Wubet Lemma | Developer |
-| Mahlet Belete | Developer |
-
----
-
-## 📄 License
-
-This project is developed for educational purposes as part of a university course project.
-
----
-
-## 🙏 Acknowledgments
-
-- Our instructor for guidance and support
-- Ethiopian bus operators for inspiration
-- Open source community for tools and libraries
-
----
-
-<p align="center">
-  Made with ❤️ in Ethiopia
-</p>
-
-<p align="center">
-  <a href="https://github.com/ezedinmoh/swiftbus">⭐ Star this repository if you found it helpful!</a>
-</p>
+**SwiftBus** - Connecting Ethiopia, One Journey at a Time 🚌

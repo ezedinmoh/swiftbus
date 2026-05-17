@@ -1,0 +1,250 @@
+.paymentHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.paymentHeader h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.paymentHeader p {
+  color: var(--gray);
+  font-size: 1.1rem;
+}
+
+.paymentContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.orderSummary {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+}
+
+.orderSummary h3 {
+  color: var(--dark);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.summaryItem span:first-child {
+  color: var(--gray);
+}
+
+.summaryItem.total {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--primary);
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 2px solid #ddd;
+}
+
+.summaryItem.total span:first-child {
+  color: var(--dark);
+}
+
+.paymentMethods {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.paymentMethods h3 {
+  color: var(--dark);
+  margin-bottom: 25px;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.paymentOption {
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.paymentOption:hover {
+  border-color: #bbdefb;
+  background: #f8fbff;
+}
+
+.paymentOption.selected {
+  border-color: var(--primary);
+  background: #f0f7ff;
+}
+
+.radioBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.paymentOption.selected .radioBtn {
+  border-color: var(--primary);
+}
+
+.radioInner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.paymentOption.selected .radioInner {
+  opacity: 1;
+}
+
+.optionContent i {
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.optionContent h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.optionContent p {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.paymentInstruction {
+  background: #fff8e1;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  border-left: 4px solid #ffc107;
+}
+
+.paymentInstruction h4 {
+  color: #8f6d00;
+  margin-bottom: 10px;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 25px;
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--gray);
+  border: 1px solid #ccc;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnOutline:hover {
+  background: #f0f0f0;
+  color: var(--dark);
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  background: var(--success);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 20px;
+}
+
+.modalContent h2 {
+  color: var(--success);
+  margin-bottom: 15px;
+}
+
+.redirectText {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .paymentContainer {
+    grid-template-columns: 1fr;
+  }
+  .orderSummary {
+    order: -1;
+  }
+}
