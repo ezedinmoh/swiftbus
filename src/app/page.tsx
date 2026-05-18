@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import styles from './home.module.css';
 
 type City = { city_code: string; name: string };
@@ -77,6 +78,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export default function HomePage() {
   const router = useRouter();
+  const { user } = useAuth();
   const [cities, setCities] = useState<City[]>(FALLBACK_CITIES);
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
@@ -317,9 +319,16 @@ export default function HomePage() {
               <Link href="/search" className="btn btn-primary" style={{ fontSize: '16px', padding: '14px 32px' }}>
                 <i className="fas fa-search"></i> Search Buses
               </Link>
-              <Link href="/signup" className="btn btn-outline" style={{ fontSize: '16px', padding: '14px 32px', borderColor: 'white', color: 'white' }}>
-                <i className="fas fa-user-plus"></i> Create Account
-              </Link>
+              {!user && (
+                <Link href="/signup" className="btn btn-outline" style={{ fontSize: '16px', padding: '14px 32px', borderColor: 'white', color: 'white' }}>
+                  <i className="fas fa-user-plus"></i> Create Account
+                </Link>
+              )}
+              {user && (
+                <Link href="/dashboard" className="btn btn-outline" style={{ fontSize: '16px', padding: '14px 32px', borderColor: 'white', color: 'white' }}>
+                  <i className="fas fa-tachometer-alt"></i> Dashboard
+                </Link>
+              )}
             </div>
           </div>
         </div>

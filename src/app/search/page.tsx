@@ -32,7 +32,7 @@ function SearchResults() {
 
   const from       = searchParams.get('from') || '';
   const to         = searchParams.get('to') || '';
-  const date       = searchParams.get('date') || '';
+  const date       = searchParams.get('date') || new Date().toISOString().split('T')[0];
   const passengers = Number(searchParams.get('passengers') || '1') || 1;
 
   const [loading, setLoading]   = useState(false);

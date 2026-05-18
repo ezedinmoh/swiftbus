@@ -25,9 +25,8 @@ try {
   // Silent fallback
 }
 
-// Production: use Turso (libSQL) — set TURSO_DATABASE_URL in Vercel env vars
-// Development: use local SQLite file via DATABASE_URL
-const dbUrl = process.env.TURSO_DATABASE_URL || process.env.DATABASE_URL || 'file:./dev.db';
+// Removed Turso and dev.db overrides
+const dbUrl = process.env.DATABASE_URL;
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -35,6 +34,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: dbUrl,
+    url: process.env.DIRECT_URL,
   },
 });
